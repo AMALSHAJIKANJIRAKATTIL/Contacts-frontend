@@ -6,7 +6,7 @@ import   ImportUI  from "./components/import/import";
 function App() {
   return (
     <div className="App">
-      <ImportUI></ImportUI>
+     
     </div>
   );
 }
