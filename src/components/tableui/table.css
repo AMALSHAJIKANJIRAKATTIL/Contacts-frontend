@@ -1,0 +1,253 @@
+.parent{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.container{
+    height: 100vh;
+    width:15%;
+    background-color:#CEF3FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo{
+    padding-top: 50px;
+    width: 70%;
+}
+
+.logout{
+    padding-bottom: 50px;
+    width: 92%;
+}
+
+.leftcontainer{
+    height: 100%;
+    width:85%;
+ 
+}
+
+
+.userBar{
+    background-color: transparent;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.mainIcon img{
+    padding-left: 1em;
+    height: 100%;
+    width: 40%;
+}
+
+.mainIcon{
+    height: 100%;
+    width: 40%;
+    display: flex;
+    align-items: left;
+}
+
+.searchBar{
+    background: #F2F2F2;
+border-radius: 6px;
+width: 40%;
+height: 60%;
+display: flex;
+justify-items: center;
+align-items: center;
+padding-left:1em ;
+flex-direction: column;
+}
+
+.searchBar img{
+    width: 10%;
+    height:50%
+}
+
+.userDetails{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.userImage{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userImage img{
+    width: 100%;
+    height: 80%;
+    
+}
+
+.userName h5,p {
+    padding: 0;
+    padding-left: 1em;
+    margin: 0;
+    font-size: medium;
+
+}
+
+.userName p{
+    text-align: left;
+    
+}
+
+.topbar{
+    position: relative;
+
+    width: 100%;
+}
+
+.topimage{
+    display: block;
+
+    width: 100%;
+}
+
+.input-field {
+    position: absolute;
+    top: 32%;
+    left: 46%;
+    z-index: 1;
+    width: 30%;
+    border: none;
+    background: transparent;
+    height: 35%;
+    padding-left: 20px;
+  }
+
+  .input-area{
+    border: none;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+  }
+
+  .input-area:focus-within{
+    border:none;
+   outline: none;
+  }
+
+.username{
+    
+        position: absolute;
+        top: 0.3%;
+        right: 2%;
+        z-index: 0;
+        display: flex;
+        flex-direction: row;
+        border: none;
+        background: transparent;
+       
+        
+      
+}
+
+.username img{
+    padding-top: 7%;
+    margin: 10px;
+    
+}
+.username h5{
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+}
+
+.username p{
+    font-size: .6rem;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.filter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+    width: 100%;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.filterimgstick{
+    width: 50%;
+    height: 90%;
+    transform: translateX(-15%);
+    flex-shrink: 1;
+}
+
+
+
+.filterimg{
+    flex-shrink: 1;
+    width: 50%;
+    height: 90%;
+}
+
+.individualBtndiv{
+    flex-shrink: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height:100%;
+    width: 50%;
+
+}
+
+.searchDrop{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+height: 100%;
+
+
+    
+}
+
+.searchDrop input{
+    padding-left: 10px;
+}
+
+.dataResult {
+    margin-bottom: -50%;
+    width: 100%;
+    /* height: 258vh; */
+    background-color: white;
+    overflow: hidden;
+    overflow-y: auto;
+    box-shadow: 1px 1px 20px rgb(0 0 0 / 10%);
+    border-radius: 6px;
+    z-index: 1;  }
+  
+  .dataResult::-webkit-scrollbar {
+    display: none;
+  }
+  .dataResult .dataItem {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: black;
+    padding-left: 10%;
+  }
+  

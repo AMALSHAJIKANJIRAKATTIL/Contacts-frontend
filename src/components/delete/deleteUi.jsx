@@ -11,7 +11,8 @@ function DeleteUI(props) {
   const [dlt, setDelete] = useState(false) ;
   const url=process.env.REACT_APP_API;
   const array=props.array;
-  //localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzU5NjAzMTgsImRhdGEiOiI2M2UyOWFlNmFlZTkwNjEyNjZmMWFlOTAiLCJpYXQiOjE2NzU4NzM5MTh9.lUlBoaXT2qQfGGU4xqK0GZKZjy8a-pa_rM1bCQUzuuA");
+
+  const {deleteVisible,setDltvisible}=props;
 
 // console.log(apiCallMade,dlt,url,array);
 
@@ -40,7 +41,7 @@ function DeleteUI(props) {
      /////////////////////
      setTimeout(() => {
             
-      setDelete(false);
+      setDltvisible(!deleteVisible);
     }, 1500);
     /////////////////////
   
@@ -54,25 +55,28 @@ function DeleteUI(props) {
       /////////////////////
       setTimeout(() => {
             
-        setDelete(false);
+        setDltvisible(!deleteVisible);
+
       }, 1500);
       /////////////////////
   
     }
   };
 
-    
+    const cancel=()=>{
+      setDltvisible(!deleteVisible);
+    }
   
 
   return (
 
-    <div className='overlay'>
+    <div className='overlay' >
 {!dlt ?
 <div className='popup'>
 
 <img src={deleteIcon} alt="delete icon" className='icon'/>
 <div className='btns'> 
-<img src={cancelBtn} alt="cancel button" className='cancelBtn'/>
+<img src={cancelBtn} alt="cancel button" className='cancelBtn' onClick={cancel}/>
 <button className='delete' onClick={deleteCall}>Ok</button>
 </div>
 
