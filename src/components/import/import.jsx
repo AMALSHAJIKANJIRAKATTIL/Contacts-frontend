@@ -7,23 +7,28 @@ import importIcon from './import.svg'
 import tickMark from './tickmark.svg'
 
 function ImportUI() {
-  
+    const [apiCallMade, setApiCallMade] = useState(false);
     const [file, setFile] = useState(false) ;
-    const [csv,setCsv]=useState(null);
     const [fileDraged,setDrag]=useState(false);
+    const url=process.env.REACT_APP_API;
 
-const fileUpload = async (file) => {
+const fileUpload = async (csv) => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", csv);
   
     try {
-      const response = await axios.post("http://localhost:5000/contacts", formData, {
+      if (!apiCallMade) {
+      const response = await axios.post(`${url}/contacts`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "authorization": localStorage.getItem("token")
         },
       });
-  
+      
+      setApiCallMade(!apiCallMade);
       console.log(response);
+      }
+      //console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -34,16 +39,19 @@ const fileUpload = async (file) => {
         event.preventDefault();
         
         const file = event.dataTransfer.files[0];
+        console.log(file);
+         
         if (file.type === "text/csv") {
 
+
+         
           setDrag(false);
 
-          setCsv(file);
+          fileUpload(file);
           setFile(true);
-
-          fileUpload(csv);
           /////////////////////
           setTimeout(() => {
+            
             setFile(false);
           }, 1500);
           /////////////////////
@@ -55,14 +63,16 @@ const fileUpload = async (file) => {
         setDrag(true);
         
       };
-
+      const handleOverlayDrop = (event) => {
+        event.preventDefault();
+        setDrag(true);
+        
+      };
      
   return (
-    <div className={styles.overlay} onDrop={handleDrop}
-    onDragOver={handleDragOver}>
+    <div className={styles.overlay}  onDragOver={handleDragOver} onDrop={handleDrop}>
         
-        {!file ? <div className={fileDraged ? styles.popuoOndrag : styles.popup}  onDrop={handleDrop}
-    onDragOver={handleDragOver} > 
+        {!file ? <div className={fileDraged ? styles.popuoOndrag : styles.popup}  > 
         <img src={importIcon} alt="import icon" className={styles.importIcon}/>
         <button className={styles.cancelBtn}>Cancel</button>
         </div>
