@@ -11,7 +11,7 @@ function DeleteUI(props) {
   const [dlt, setDelete] = useState(false) ;
   const url=process.env.REACT_APP_API;
   const array=props.array;
-  localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzU5NjAzMTgsImRhdGEiOiI2M2UyOWFlNmFlZTkwNjEyNjZmMWFlOTAiLCJpYXQiOjE2NzU4NzM5MTh9.lUlBoaXT2qQfGGU4xqK0GZKZjy8a-pa_rM1bCQUzuuA");
+  //localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzU5NjAzMTgsImRhdGEiOiI2M2UyOWFlNmFlZTkwNjEyNjZmMWFlOTAiLCJpYXQiOjE2NzU4NzM5MTh9.lUlBoaXT2qQfGGU4xqK0GZKZjy8a-pa_rM1bCQUzuuA");
 
 // console.log(apiCallMade,dlt,url,array);
 
