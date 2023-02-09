@@ -6,11 +6,12 @@ import styles from './import.module.css'
 import importIcon from './import.svg'
 import tickMark from './tickmark.svg'
 
-function ImportUI() {
+function ImportUI(props) {
     const [apiCallMade, setApiCallMade] = useState(false);
     const [file, setFile] = useState(false) ;
     const [fileDraged,setDrag]=useState(false);
     const url=process.env.REACT_APP_API;
+    const {importVisible,setImportvisible}=props;
 
 const fileUpload = async (csv) => {
     const formData = new FormData();
@@ -52,7 +53,7 @@ const fileUpload = async (csv) => {
           /////////////////////
           setTimeout(() => {
             
-            setFile(false);
+            setImportvisible(!importVisible);
           }, 1500);
           /////////////////////
         }
@@ -69,12 +70,16 @@ const fileUpload = async (csv) => {
         
       };
      
+      const cancelClick=()=>{
+        setImportvisible(!importVisible);
+      }
+
   return (
-    <div className={styles.overlay}  onDragOver={handleDragOver} onDrop={handleDrop}>
+    <div className={styles.overlay}  onDragOver={handleDragOver} onDrop={handleDrop} >
         
         {!file ? <div className={fileDraged ? styles.popuoOndrag : styles.popup}  > 
         <img src={importIcon} alt="import icon" className={styles.importIcon}/>
-        <button className={styles.cancelBtn}>Cancel</button>
+        <button className={styles.cancelBtn} onClick={cancelClick}>Cancel</button>
         </div>
         : 
         <div className={styles.popup} >
