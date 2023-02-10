@@ -19,7 +19,7 @@ import ImportUI from '../import/import'
 
 
 import { isAuthenticated } from '../../helper/helper'
-
+import { HandleLogout } from '../../helper/helper'
 
 function Table() {
 
@@ -178,7 +178,7 @@ function Table() {
         {/*Logout button click logic need to be implemented here */}
         
         <div className='logout'>
-            <img src={logout}  alt='icon'></img>
+            <img src={logout}  alt='icon' onClick={HandleLogout}></img>
             </div>
     </div>
 <div className='leftcontainer'>
