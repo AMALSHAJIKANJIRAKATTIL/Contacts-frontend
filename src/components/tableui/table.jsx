@@ -15,6 +15,10 @@ import userImage from './user.svg'
 import Delete from '../delete/deleteUi'
 import ImportUI from '../import/import'
 
+
+import { isAuthenticated } from '../../helper/helper'
+
+
 function Table() {
 
 
@@ -34,24 +38,26 @@ function Table() {
 
   const [renderOnce, setRenderOnce] = useState(false);
   const [isAllchecked,setAllchecked]=useState(false);
+  const url=process.env.REACT_APP_API;
 
 
-  // const token = isAuthenticated();
-  let url=process.env.REACT_APP_API;
+
+  const token = isAuthenticated();
   useEffect(() => {
     setLoading(true);
     fetch(`${url}/contacts`, {
       method: 'GET',
       headers: {
         'Content-Type': "application/json",
-        authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzYwOTY0OTIsImRhdGEiOiI2M2UyOWFlNmFlZTkwNjEyNjZmMWFlOTAiLCJpYXQiOjE2NzYwMTAwOTJ9.mdR3HmBWcxnjBh9vbN3Rve8MDmjFLr_3eOdna2G0IlQ"
+        authorization: `${token}`
       }
     })
       .then(res => res.json())
       .then(res => {
         let contacts=res.data.map((item) => ({ ...item, isChecked: false }));
+        
         setData(contacts);
-
+        
         if(res.data.length!=0){
           setRenderTable(true);
         }
@@ -80,6 +86,7 @@ function Table() {
     });
 
     if (searchWord === "") {
+      setRenderOnce(!renderOnce)
       setFilteredData([]);
     } else {
       setFilteredData(newFilter);
@@ -93,25 +100,59 @@ function Table() {
   }
   //console.log(data.length);
 
-  const handleAllcheck=()=>{
+  const handleAllcheck=async (e)=>{
     setAllchecked(!isAllchecked);
+    
+    let newContacts=await data.map((obj)=> 
+      ({...obj, isChecked:e.target.checked})
+   );
+ setData(newContacts);
+  }
+
+
+
+
+  const changeChecked=async (contact)=>{
+    //console.log(data,"hi");
+    let newContacts=await data.map((obj)=>{ if (obj._id === contact._id) {
+      return {...obj, isChecked: !contact.isChecked};
+    }
+    return obj;
+   });
+ setData(newContacts);
+  }
+
+
+  const individualDlt=async (contact)=>{
+    
+    let newContacts=await data.map((obj)=>{ if (obj._id === contact._id) {
+      return {...obj, isChecked: true};
+    }
+    return obj;
+   });
+   setData(newContacts);
+
+   setDltvisible(true)
 
   }
 
-  const changeChecked=(contact)=>{
-    let data=data.map((val)=>{ if(val._id===contact._id){
-      val.isChecked=!contact.isChecked
-    }
-    setData(data)
-    console.log(data);
-  })
+
+  const searchEvent=(val)=>{
+    
+    let search=val.target.innerText;
+    console.log(search);
+    const newFilter = data.filter((value) => {
+      return value.email.toLowerCase().includes(search.toLowerCase());
+    });
+    setData(newFilter)
+
   }
 
   return (
 <>
     {
       deleteVisible && 
-      <div><Delete setRenderOnce={setRenderOnce} renderOnce={renderOnce} setDltvisible={setDltvisible} deleteVisible={deleteVisible}></Delete></div>
+      <div><Delete data={data} setData={setData} setRenderOnce={setRenderOnce} renderOnce={renderOnce} setDltvisible={setDltvisible} deleteVisible={deleteVisible}></Delete></div>
     }
     {
       importVisible && 
@@ -142,7 +183,7 @@ function Table() {
         <div className='searchDrop'>
         <img src={searchIcon} alt='search icon'></img>
 
-        <input type={"email"} className='input-area' placeholder='Search by Email id...' onChange={handleFilter} onBlur={cancelDropDown}></input> 
+        <input type={"text"} className='input-area' placeholder='Search by Email id...' onChange={handleFilter} onBlur={cancelDropDown}></input> 
         
      
       </div>
@@ -151,9 +192,9 @@ function Table() {
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
-              <a className="dataItem">
-                <p>{value.email} </p>
-              </a>
+              <div key={key} className="dataItem" onMouseEnter={searchEvent}>
+                {value.email}
+              </div>
             );
           })}
           
@@ -215,7 +256,7 @@ function Table() {
                       heading === "Name" ? (
                        <td className='tableTd'>
                         <div className="allCheck">
-                         <input type="checkbox" checked={isAllchecked} onChange={handleAllcheck}/>
+                         <input type="checkbox" checked={isAllchecked} onChange={(e)=>handleAllcheck(e)}/>
                         <p className="nname">{heading}</p>
                         </div>
                        </td>
@@ -258,7 +299,7 @@ function Table() {
 
 
                             {/* <button className='deletebutton'>Delete</button> */}
-                            <svg className="deleteIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg onClick={(e)=>individualDlt(contact)} className="deleteIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
 </svg>
 

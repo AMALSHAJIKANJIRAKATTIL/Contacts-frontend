@@ -5,6 +5,7 @@ import styles from './import.module.css'
 
 import importIcon from './import.svg'
 import tickMark from './tickmark.svg'
+import { isAuthenticated } from '../../helper/helper'
 
 function ImportUI(props) {
     const [apiCallMade, setApiCallMade] = useState(false);
@@ -13,6 +14,8 @@ function ImportUI(props) {
     const url=process.env.REACT_APP_API;
     const {importVisible,setImportvisible}=props;
     const {renderOnce,setRenderOnce}=props;
+    const token = isAuthenticated();
+
 
 const fileUpload = async (csv) => {
     const formData = new FormData();
@@ -23,7 +26,7 @@ const fileUpload = async (csv) => {
       const response = await axios.post(`${url}/contacts`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "authorization": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzYwOTY0OTIsImRhdGEiOiI2M2UyOWFlNmFlZTkwNjEyNjZmMWFlOTAiLCJpYXQiOjE2NzYwMTAwOTJ9.mdR3HmBWcxnjBh9vbN3Rve8MDmjFLr_3eOdna2G0IlQ'
+          "authorization": `${token}`
         },
       });
       

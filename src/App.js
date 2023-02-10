@@ -1,20 +1,24 @@
-import React from 'react';
-
 import './App.css';
-import   ImportUI  from "./components/import/import";
-import DeleteUI from './components/delete/deleteUi';
-import { ContextProvider } from './components/context/contacts';
+import Login from './components/login/login'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignUp from './components/signup/signup';
 import Table from './components/tableui/table';
-
-
-
+import PrivateRoute from './components/auth/PrivateRoute';
 function App() {
-  
   return (
-    <div className="App">
-<Table></Table>
-    </div>
+    <>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login/>}/>
+          <Route path="/register" element={<SignUp/>}/>
+          <Route path="/contacts" element={<PrivateRoute Child={Table} />}/>
+          {/* <Route path="/contacts" element={<Table />} /> */}
+
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
 export default App;
+
