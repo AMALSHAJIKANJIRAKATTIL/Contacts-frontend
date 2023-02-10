@@ -29,7 +29,6 @@ function Table() {
   const [importVisible,setImportvisible]=useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
-  localStorage.setItem('user','amalshajikm@gmail.com');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -136,6 +135,7 @@ function Table() {
 
   }
 
+  
 
   const searchEvent=(val)=>{
     
@@ -144,6 +144,9 @@ function Table() {
     const newFilter = data.filter((value) => {
       return value.email.toLowerCase().includes(search.toLowerCase());
     });
+    if(newFilter.length===0){
+      setRenderOnce(!renderOnce)
+    }
     setData(newFilter)
 
   }
@@ -165,8 +168,8 @@ function Table() {
 
 
 
-    <div className='container'>
-        <div ><img src={side} className='logo'  alt='icon'></img></div>
+    <div className='container1'>
+        <div ><img src={side} id='logo'  alt='icon'></img></div>
         
         {/*Logout button click logic need to be implemented here */}
         
