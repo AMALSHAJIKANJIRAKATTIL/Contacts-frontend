@@ -51,7 +51,9 @@ function DeleteUI(props) {
      /////////////////////
      setTimeout(() => {
       setRenderOnce(!renderOnce);
+      
       setDltvisible(!deleteVisible);
+      
     }, 1500);
     /////////////////////
   
@@ -66,7 +68,7 @@ function DeleteUI(props) {
       setTimeout(() => {
         setRenderOnce(!renderOnce);
         setDltvisible(!deleteVisible);
-
+       
       }, 1500);
       /////////////////////
   
