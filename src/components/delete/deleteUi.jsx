@@ -33,8 +33,7 @@ function DeleteUI(props) {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        authorization: `${token}`,
-
+        "authorization": `${token}`,
         "ids": array
       }
     };

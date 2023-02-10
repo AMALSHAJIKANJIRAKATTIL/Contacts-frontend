@@ -213,7 +213,7 @@ function Table() {
   </div>
 <div className='userName'>
 
-  <h5>{localStorage.getItem('user').split('@')[0]}</h5>
+  <h5>{localStorage.getItem('user').split('@')[0].split('"')[1]}</h5>
 
   
   <p>user</p></div>
