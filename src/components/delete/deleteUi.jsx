@@ -13,6 +13,7 @@ function DeleteUI(props) {
   const array=props.array;
 
   const {deleteVisible,setDltvisible}=props;
+  const {renderOnce,setRenderOnce}=props;
 
 // console.log(apiCallMade,dlt,url,array);
 
@@ -40,7 +41,7 @@ function DeleteUI(props) {
 
      /////////////////////
      setTimeout(() => {
-            
+      setRenderOnce(!renderOnce);
       setDltvisible(!deleteVisible);
     }, 1500);
     /////////////////////
@@ -54,7 +55,7 @@ function DeleteUI(props) {
 
       /////////////////////
       setTimeout(() => {
-            
+        setRenderOnce(!renderOnce);
         setDltvisible(!deleteVisible);
 
       }, 1500);

@@ -250,4 +250,116 @@ height: 100%;
     color: black;
     padding-left: 10%;
   }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
   
+  th {
+    background-color: #ddd;
+    text-align: left;
+    padding: 8px;
+   
+  }
+  
+  /* td {
+    text-align: left;
+    padding: 8px;
+    border-radius: 10px;
+  } */
+  
+  tr.odd {
+    background-color:white ;
+  }
+  
+  tr.even {
+    background-color: rgba(178, 223, 255, 0.31);
+  }
+  .buttonContainer1 {
+       width: 100%;
+       display: flex;
+       justify-content: space-between;
+       padding-right : 10px;
+
+  }
+  .editbutton {
+    background-color: #9295d8;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .deletebutton {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  button:hover {
+    background-color: #3e8e41;
+  }
+  .nameContainer {
+    display: flex;
+    width: 100%;
+  }
+
+  .headings {
+    background-color: #B3DFFF;
+    padding: 10px;
+  }
+
+  .checkbox {
+    margin-right: 10px;
+  }
+
+  .name1 {
+    margin-left: 10px;
+  }
+
+  .editIcon {
+    padding-right: 15px;
+    cursor: pointer;
+
+  }
+
+  .loadingContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .allCheck {
+    display: flex;
+    height: 100%;
+  }
+
+  .nname {
+    margin-left : 10px
+  }
+.tableTd{
+        /* border: 1px solid #B3DFFF; */
+        text-align: left;
+        padding: 8px;
+        /* border-radius: 10px; */
+        background: #B3DFFF;
+        /* box-shadow: inset -1px -1px 20px rgb(254 134 39 / 10%), inset 1px 1px 20px rgb(254 134 39 / 10%); */
+        border-radius: -83px;
+}
+  
+.Overflow{
+    width: 100%;
+    height: 75%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+td{
+    padding: 5px;
+}

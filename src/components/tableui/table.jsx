@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import './table.css'
 import side from './side.svg'
 import logout from './logout.svg'
@@ -17,9 +17,7 @@ import ImportUI from '../import/import'
 
 function Table() {
 
-/////////////////// should get from backend
-  const contacts=["abc","cfg","abc","cfg","abc","cfg","abc","cfg"];
-////////////////
+
 
 
 
@@ -27,8 +25,44 @@ function Table() {
   const [importVisible,setImportvisible]=useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
-  // console.log(localStorage.getItem('user').split('@')[0])
+  localStorage.setItem('user','amalshajikm@gmail.com');
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const headings = ['Name', 'Designation', 'Company', 'Industry', 'Email', ' Phone number', 'Country', 'Action'];
+  const [rendertable,setRenderTable]=useState(false);
 
+  const [renderOnce, setRenderOnce] = useState(false);
+  const [isAllchecked,setAllchecked]=useState(false);
+
+
+  // const token = isAuthenticated();
+  let url=process.env.REACT_APP_API;
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${url}/contacts`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': "application/json",
+        authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzYwOTY0OTIsImRhdGEiOiI2M2UyOWFlNmFlZTkwNjEyNjZmMWFlOTAiLCJpYXQiOjE2NzYwMTAwOTJ9.mdR3HmBWcxnjBh9vbN3Rve8MDmjFLr_3eOdna2G0IlQ"
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        let contacts=res.data.map((item) => ({ ...item, isChecked: false }));
+        setData(contacts);
+
+        if(res.data.length!=0){
+          setRenderTable(true);
+        }
+        setLoading(false);
+        console.log(res);
+      })
+      .catch(err => {
+        setError(err);
+        setLoading(false);
+      });
+  }, [renderOnce]);
   
   const deleteClick=()=>{
     setDltvisible(!deleteVisible)
@@ -41,8 +75,8 @@ function Table() {
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
-    const newFilter = contacts.filter((value) => {
-      return value.toLowerCase().includes(searchWord.toLowerCase());
+    const newFilter = data.filter((value) => {
+      return value.email.toLowerCase().includes(searchWord.toLowerCase());
     });
 
     if (searchWord === "") {
@@ -57,16 +91,32 @@ function Table() {
     setFilteredData([]);
     setWordEntered("");
   }
+  //console.log(data.length);
+
+  const handleAllcheck=()=>{
+    setAllchecked(!isAllchecked);
+
+  }
+
+  const changeChecked=(contact)=>{
+    let data=data.map((val)=>{ if(val._id===contact._id){
+      val.isChecked=!contact.isChecked
+    }
+    setData(data)
+    console.log(data);
+  })
+  }
+
   return (
 <>
     {
       deleteVisible && 
-      <div><Delete setDltvisible={setDltvisible} deleteVisible={deleteVisible}></Delete></div>
+      <div><Delete setRenderOnce={setRenderOnce} renderOnce={renderOnce} setDltvisible={setDltvisible} deleteVisible={deleteVisible}></Delete></div>
     }
     {
       importVisible && 
       <div>
-    <ImportUI setImportvisible={setImportvisible} importVisible={importVisible}></ImportUI>
+    <ImportUI setRenderOnce={setRenderOnce} renderOnce={renderOnce} setImportvisible={setImportvisible} importVisible={importVisible}></ImportUI>
       </div>
     }
     <div className='parent'>
@@ -102,7 +152,7 @@ function Table() {
           {filteredData.slice(0, 15).map((value, key) => {
             return (
               <a className="dataItem">
-                <p>{value} </p>
+                <p>{value.email} </p>
               </a>
             );
           })}
@@ -147,7 +197,85 @@ function Table() {
     
     
     {/* Write in this div the table view code */}
+    <div className="Overflow">
+          {
+            loading ? (
+              <div className="loadingContainer">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"></img>
+              </div>
+            )  : (
 
+          <table>
+            <thead>
+              <tr className='headings'>
+                {
+                  headings.map((heading, index) => {
+                    return (
+                     
+                      heading === "Name" ? (
+                       <td className='tableTd'>
+                        <div className="allCheck">
+                         <input type="checkbox" checked={isAllchecked} onChange={handleAllcheck}/>
+                        <p className="nname">{heading}</p>
+                        </div>
+                       </td>
+                      ) : (
+                        <td>
+                          {heading}
+                        </td>
+                      )
+                     
+                    )
+                  })
+                }
+              </tr>
+            </thead>
+            { rendertable &&
+            <tbody >
+            
+                {
+                  data.map((contact, index) => {
+                    return (
+                      <tr className={`${index % 2 === 0 ? "odd" : "even"}`}>
+                        <td >
+                          <div className='nameContainer'>
+                            <input type="checkbox" checked={contact.isChecked} onChange={(e)=>{changeChecked(contact)}}/>
+                            <p className="name1">{contact.name}</p>
+                          </div>
+                        </td>
+                        <td>{contact.designation}</td>
+                        <td>{contact.company}</td>
+                        <td>{contact.industry}</td>
+                        <td>{contact.email}</td>
+                        <td>{contact.phone}</td>
+                        <td>{contact.country}</td>
+                        <td>
+                          <div className='buttonContainer1'>
+                            {/* <button className='editbutton'>Edit</button> */}
+                            <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-2 h-2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+</svg>
+
+
+                            {/* <button className='deletebutton'>Delete</button> */}
+                            <svg className="deleteIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+</svg>
+
+                          </div>
+                        </td>
+              </tr>
+                    )
+                  })
+                }
+             
+            </tbody>
+          }
+          </table>
+            )
+          }
+
+        </div>
 
     </div>
 

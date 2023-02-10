@@ -13,7 +13,7 @@ export const ContextProvider=(props)=>{
 
 
 const postContacts= async (ContactsData)=>{
-    return await axios.post(`${url}`,ContactsData,config)
+    return await axios.post(`${url}`,ContactsData)
     .then((res)=>console.log(res))
     .catch((err)=>{
         console.log(err.response.data.error);
@@ -21,7 +21,7 @@ const postContacts= async (ContactsData)=>{
 };
 
 const fetchContacts=()=>{
-    axios.get(`${url}`,config)
+    axios.get(`${url}`)
     .then((res)=>{
         const data=res.data.users[0].contact;
         setContacts(data);
