@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState , useEffect} from 'react'
+
+
 import './table.css'
 import side from './side.svg'
 import logout from './logout.svg'
@@ -56,7 +58,8 @@ function Table() {
         let contacts=res.data.map((item) => ({ ...item, isChecked: false }));
         
         setData(contacts);
-        
+        setAllchecked(false);
+
         if(res.data.length!=0){
           setRenderTable(true);
         }
@@ -153,9 +156,10 @@ function Table() {
 
   return (
 <>
+
     {
       deleteVisible && 
-      <div><Delete data={data} setData={setData} setRenderOnce={setRenderOnce} renderOnce={renderOnce} setDltvisible={setDltvisible} deleteVisible={deleteVisible}></Delete></div>
+      <div><Delete  data={data} setData={setData} setRenderOnce={setRenderOnce} renderOnce={renderOnce} setDltvisible={setDltvisible} deleteVisible={deleteVisible}></Delete></div>
     }
     {
       importVisible && 
@@ -284,15 +288,15 @@ function Table() {
                         <td >
                           <div className='nameContainer'>
                             <input type="checkbox" checked={contact.isChecked} onChange={(e)=>{changeChecked(contact)}}/>
-                            <p className="name1">{contact.name}</p>
+                            <p title={contact.name} className="name1">{contact.name}</p>
                           </div>
                         </td>
-                        <td>{contact.designation}</td>
-                        <td>{contact.company}</td>
-                        <td>{contact.industry}</td>
-                        <td>{contact.email}</td>
-                        <td>{contact.phone}</td>
-                        <td>{contact.country}</td>
+                        <td title={contact.designation}>{contact.designation}</td>
+                        <td title={contact.company}>{contact.company}</td>
+                        <td title={contact.industry}>{contact.industry}</td>
+                        <td title={contact.email}>{contact.email}</td>
+                        <td title={contact.phone}>{contact.phone}</td>
+                        <td title={contact.country}>{contact.country}</td>
                         <td>
                           <div className='buttonContainer1'>
                             {/* <button className='editbutton'>Edit</button> */}
