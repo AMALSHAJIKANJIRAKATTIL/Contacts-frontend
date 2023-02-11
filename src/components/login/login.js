@@ -43,7 +43,7 @@ const Login = () => {
                         alert(data.error)
                     } else {
                         localStorage.setItem("token", JSON.stringify(data.token))
-                        localStorage.setItem("user", JSON.stringify(data.user))
+                        localStorage.setItem("user", data.user)
                         setemail("")
                         setpassword("")
                         console.log(isAuthenticated())
