@@ -89,7 +89,7 @@ function DeleteUI(props) {
 <img src={deleteIcon} alt="delete icon" className='icon'/>
 <div className='btns'> 
 <img src={cancelBtn} alt="cancel button" className='cancelBtn' onClick={cancel}/>
-<button className='delete' onClick={deleteCall}>Ok</button>
+<button className='delete' id='btn' onClick={deleteCall}>Ok</button>
 </div>
 
 </div>

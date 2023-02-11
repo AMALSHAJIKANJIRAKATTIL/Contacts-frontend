@@ -405,7 +405,7 @@ scrollbar {
 }
 
 
-button:hover{
+#btn:hover{
   background-color: #2da5fc;
   border-radius: 10%;
   width: 80%;
