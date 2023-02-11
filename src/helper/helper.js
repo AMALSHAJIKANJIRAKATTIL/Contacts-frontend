@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+
 export const isAuthenticated = () =>{
     if(typeof window == 'undefined'){
         return false;
@@ -28,6 +28,7 @@ export const getUserEmail = () =>{
 export const HandleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    return <Navigate to="/" />
+    window.location.reload();
+    
 }
 
