@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState , useEffect} from 'react'
-
+import close from './close.png';
 
 import './table.css'
 import side from './side.svg'
@@ -26,7 +26,7 @@ function Table() {
 
 
 
-
+  const [enteredText,setEnteredText]=useState('')
   const [deleteVisible,setDltvisible]=useState(false);
   const [importVisible,setImportvisible]=useState(false);
   const [filteredData, setFilteredData] = useState([]);
@@ -82,6 +82,7 @@ function Table() {
  
   const handleFilter = (event) => {
     const searchWord = event.target.value;
+    setEnteredText(searchWord);
     setWordEntered(searchWord);
     const newFilter = data.filter((value) => {
       return value.email.toLowerCase().includes(searchWord.toLowerCase());
@@ -138,12 +139,20 @@ function Table() {
 
   }
 
-  
+  const clearBtn=()=>{
+    if(enteredText===''){
+      setEnteredText('')
+    }else{
+    setRenderOnce(!renderOnce)
+    setEnteredText('')
+    }
+  }
 
   const searchEvent=(val)=>{
     
     let search=val.target.innerText;
     console.log(search);
+    setEnteredText(search);
     const newFilter = data.filter((value) => {
       return value.email.toLowerCase().includes(search.toLowerCase());
     });
@@ -190,16 +199,16 @@ function Table() {
         <div className='searchDrop'>
         <img src={searchIcon} alt='search icon'></img>
 
-        <input type={"text"} className='input-area' placeholder='Search by Email id...' onChange={handleFilter} onBlur={cancelDropDown}></input> 
+        <input type={"text"} value={enteredText} className='input-area' placeholder='Search by Email id...' onChange={handleFilter} onBlur={cancelDropDown}></input> 
         
-     
+        <img src={close} alt='close icon' id='closeIcon' onClick={clearBtn}></img>
       </div>
       
         {filteredData.length != 0 && (
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
-              <div key={key} className="dataItem" onMouseEnter={searchEvent}>
+              <div key={key} className="dataItem"  onMouseEnter={searchEvent}>
                 {value.email}
               </div>
             );
@@ -294,7 +303,13 @@ function Table() {
                         <td title={contact.designation}>{contact.designation}</td>
                         <td title={contact.company}>{contact.company}</td>
                         <td title={contact.industry}>{contact.industry}</td>
-                        <td title={contact.email}>{contact.email}</td>
+                        <td><div class="tooltip">
+  <a href={`mailto:${contact.email}`} target='_blank'>{contact.email}
+    <span class="tooltip-text">{contact.email}</span>
+  </a>
+</div>
+                          
+                          </td>
                         <td title={contact.phone}>{contact.phone}</td>
                         <td title={contact.country}>{contact.country}</td>
                         <td>

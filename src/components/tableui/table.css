@@ -18,7 +18,7 @@
 #logo{
     padding-top: 50px;
     padding-left: 30px;
-    width: 70%;
+    width: 80%;
 }
 
 .logout{
@@ -366,7 +366,7 @@ height: 100%;
     width: 100%;
     height: 75%;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: scroll;
     padding-left: 10px;
     padding-right: 10px;
     background: #FBFBFB;
@@ -374,4 +374,83 @@ height: 100%;
 
 td{
     padding: 5px;
+}
+
+
+/* width */
+scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ddd;
+  border-radius: 10px;
+}
+
+
+#closeIcon{
+  width: 24px;
+  height: 24px;
+}
+
+
+button:hover{
+  background-color: #2da5fc;
+  border-radius: 10%;
+  width: 80%;
+  color: white;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip a {
+  text-decoration: none;
+}
+
+.tooltip span {
+  visibility: hidden;
+  width: 120%;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 10%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip span::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+.tooltip:hover span {
+  visibility: visible;
+  opacity: 1;
 }
