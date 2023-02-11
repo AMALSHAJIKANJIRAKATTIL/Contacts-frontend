@@ -47,7 +47,7 @@ const Login = () => {
                         setemail("")
                         setpassword("")
                         console.log(isAuthenticated())
-                        alert(data.message)
+                        
                         setredirect(true);
                         
                     }
